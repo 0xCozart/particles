@@ -32,14 +32,25 @@ function SignInButton() {
       onClick={async () => {
         setLoading(true);
         let accounts;
+        let selfId;
         if (window.ethereum.request)
           accounts = await window.ethereum.request({
             method: "eth_requestAccounts",
           });
-        if (accounts)
-          await connect(
+        if (accounts) {
+          selfId = await connect(
             new EthereumAuthProvider(window.ethereum, accounts[0])
-          ).then(() => setLoading(false));
+          );
+          console.log({ selfId });
+          setLoading(false);
+          console.log({ connection });
+        }
+        // if (selfId) {
+        //   const session = connection.selfID
+        //     ? connection.selfID.client.session
+        //     : null;
+        //   session.serialize();
+        // }
       }}
       label="Connect"
     />

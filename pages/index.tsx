@@ -13,6 +13,9 @@ declare global {
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  // const record = useViewerRecord("basicProfile");
+
+  // console.log({ record });
   return (
     <>
       <Head>
