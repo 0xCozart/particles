@@ -1,7 +1,14 @@
 import { Inter } from "@next/font/google";
 import Head from "next/head";
 import Image from "next/image";
+import { DynamicSignInButton } from "../components/buttons/dynamic.buttons";
 import styles from "../styles/Home.module.css";
+
+declare global {
+  interface Window {
+    ethereum: import("ethers").providers.ExternalProvider;
+  }
+}
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +26,7 @@ export default function Home() {
           <p>
             Get started by editing&nbsp;
             <code className={styles.code}>pages/index.tsx</code>
+            <DynamicSignInButton />
           </p>
           <div>
             <a

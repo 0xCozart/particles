@@ -1,32 +1,48 @@
 import { EthereumAuthProvider, useViewerConnection } from "@self.id/framework";
+import { Button } from "primereact/button";
+import { useEffect, useState } from "react";
 
-declare let window: any;
+// declare let window: any;
+
 // A button to initiate the connection flow.
 // A Provider must be preset at a higher level for the `useViewConnection` hook to work.
-function ConnectButton() {
+function SignInButton() {
+  const [loading, setLoading] = useState(false);
+  const [hasEthereum, setHasEthereum] = useState(false);
   const [connection, connect, disconnect] = useViewerConnection();
+
+  useEffect(() => {
+    if (window.ethereum) {
+      setHasEthereum(true);
+    }
+  }, []);
 
   // need to refactor this lmao
   return connection.status === "connected" ? (
-    <button
+    <Button
       onClick={() => {
         disconnect();
       }}
-    >
-      Disconnect ({connection.selfID.id})
-    </button>
-  ) : "ethereum" in window ? (
-    <button
+      label="Disconnect"
+    />
+  ) : hasEthereum ? (
+    <Button
       disabled={connection.status === "connecting"}
+      loading={loading}
       onClick={async () => {
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        await connect(new EthereumAuthProvider(window.ethereum, accounts[0]));
+        setLoading(true);
+        let accounts;
+        if (window.ethereum.request)
+          accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+          });
+        if (accounts)
+          await connect(
+            new EthereumAuthProvider(window.ethereum, accounts[0])
+          ).then(() => setLoading(false));
       }}
-    >
-      Connect
-    </button>
+      label="Connect"
+    />
   ) : (
     <p>
       An injected Ethereum provider such as{" "}
@@ -35,4 +51,4 @@ function ConnectButton() {
   );
 }
 
-export default ConnectButton;
+export default SignInButton;
