@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 
 interface SignInButtonProps {
   connection: ViewerConnectionState;
+  handleClick: () => void;
 }
 
 function ConnectButton(props: SignInButtonProps) {
