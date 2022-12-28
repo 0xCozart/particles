@@ -3,6 +3,7 @@ import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 import { CONNECTION, ConnectionStatus } from "../../types/selfId";
 import { ethereumSignIn } from "../../utils/self-id";
+import CustomToast from "../toasts/CustomToast";
 
 // declare let window: any;
 
@@ -44,13 +45,22 @@ function DisconnectButton(props: DisconnectButtonProps) {
 function SelfIdButton() {
   // const [status, setStatus] = useState<ConnectionStatus>("idle");
   const [hasEthereum, setHasEthereum] = useState(false);
+  const [warningMessage, setWarningMessage] = useState("");
   const [connection, connect, disconnect] = useViewerConnection();
 
   useEffect(() => {
     if (window.ethereum) {
       setHasEthereum(true);
+    } else {
+      setHasEthereum(false);
+      setWarningMessage(
+        "An injected Ethereum provider such as MetaMask is needed to authenticate."
+      );
     }
-  }, []);
+    if (connection.status === CONNECTION.failed) {
+      setWarningMessage("sign-in has failed.");
+    }
+  }, [connection]);
 
   const handleConnect = async () => {
     await ethereumSignIn(connect);
@@ -66,10 +76,15 @@ function SelfIdButton() {
   ) : hasEthereum ? (
     <ConnectButton connection={connection.status} handleClick={handleConnect} />
   ) : (
-    <p>
-      An injected Ethereum provider such as{" "}
-      <a href="https://metamask.io/">MetaMask</a> is needed to authenticate.
-    </p>
+    <CustomToast
+      appear={!hasEthereum && connection.status !== CONNECTION.failed}
+      message={warningMessage}
+      severity={"warn"}
+    />
+    // <p>
+    //   An injected Ethereum provider such as{" "}
+    //   <a href="https://metamask.io/">MetaMask</a> is needed to authenticate.
+    // </p>
   );
 }
 
