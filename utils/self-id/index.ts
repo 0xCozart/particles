@@ -9,9 +9,10 @@ async function UseRecord() {
 
 // This will change to check if did is authenticated and if session is live or expired
 function isSignedIn() {
-  return window.did ? true : false;
+  return "did" in window ? true : false;
 }
 
+// doesnt need to return anything since useViewerConnection hook gives connection status
 async function ethereumSignIn(
   connect: (provider: EthereumAuthProvider) => void
 ) {
@@ -33,12 +34,14 @@ async function ethereumSignIn(
     }
   } catch (e) {
     console.error(e);
-    return e;
   }
 }
 
-async function ethereumSignOut(disconnect: () => void) {
-  await disconnect();
-}
+// async function ethereumSignOut(
+//   disconnect: () => void
+// ): Promise<ConnectionStatus> {
+//   await disconnect();
+//   return CONNECTION.idle;
+// }
 
-export { UseRecord, isSignedIn };
+export { UseRecord, isSignedIn, ethereumSignIn };
