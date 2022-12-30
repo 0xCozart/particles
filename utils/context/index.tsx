@@ -1,6 +1,11 @@
 import { SelfID } from "@self.id/framework";
-import { AppContext } from "next/app";
-import { createContext, ReactNode } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from "react";
 
 interface ContextType {
   selfid: SelfID | null;
@@ -8,22 +13,30 @@ interface ContextType {
   // logout: () => void;
 }
 
-const defaultContext: ContextType = {
+interface UpdatableContext {
+  context: ContextType | null;
+  setContext: Dispatch<SetStateAction<ContextType | null>>;
+}
+
+const defaultContext = {
   selfid: null,
   // login: () => {},
   // logout: () => {},
 };
 
-const AppContext = createContext<ContextType>(defaultContext);
+const AppContext = createContext<UpdatableContext | null>(null);
 
 type Props = {
   children: ReactNode;
 };
-
-function AppWrapper({ children }: Props) {
+// context now passed down w/ state dispatcher
+function ContextWrapper({ children }: Props) {
+  const [context, setContext] = useState<ContextType | null>(null);
   return (
-    <AppContext.Provider value={defaultContext}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ context, setContext }}>
+      {children}
+    </AppContext.Provider>
   );
 }
 
-export { AppWrapper };
+export { ContextWrapper, AppContext };

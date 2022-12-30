@@ -75,4 +75,4 @@ function serializeSession(selfid: SelfID) {
 //   return CONNECTION.idle;
 // }
 
-export { UseRecord, isSignedIn, ethereumSignIn, serializeSession };
+export { UseBasicProfile, isSignedIn, ethereumSignIn, serializeSession };

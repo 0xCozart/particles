@@ -1,7 +1,8 @@
 import { useViewerConnection } from "@self.id/framework";
 import { Button } from "primereact/button";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CONNECTION, ConnectionStatus } from "../../types/selfId";
+import { AppContext } from "../../utils/context";
 import { ethereumSignIn } from "../../utils/self-id";
 import CustomToast from "../toasts/CustomToast";
 
@@ -47,6 +48,7 @@ function SelfIdButton() {
   const [hasEthereum, setHasEthereum] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [connection, connect, disconnect] = useViewerConnection();
+  const { selfid, setSelfid } = useContext(AppContext);
 
   useEffect(() => {
     if (window.ethereum) {
