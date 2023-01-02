@@ -1,4 +1,4 @@
-import { SelfID } from "@self.id/framework";
+import { BasicProfile } from "@self.id/framework";
 import {
   createContext,
   Dispatch,
@@ -7,24 +7,23 @@ import {
   useState,
 } from "react";
 
+// Context object type >>> extend this
 interface ContextType {
-  selfid: SelfID | null;
-  // login: () => void;
-  // logout: () => void;
+  basicProfile: BasicProfile | null;
 }
 
 interface UpdatableContext {
   context: ContextType | null;
-  setContext: Dispatch<SetStateAction<ContextType | null>>;
+  setContext: Dispatch<SetStateAction<ContextType | null>> | null;
 }
 
-const defaultContext = {
-  selfid: null,
-  // login: () => {},
-  // logout: () => {},
+// initial context state
+const defaultContextState: UpdatableContext = {
+  context: null,
+  setContext: null,
 };
 
-const AppContext = createContext<UpdatableContext | null>(null);
+const AppContext = createContext<UpdatableContext>(defaultContextState);
 
 type Props = {
   children: ReactNode;

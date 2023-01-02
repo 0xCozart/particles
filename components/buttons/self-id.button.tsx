@@ -3,7 +3,7 @@ import { Button } from "primereact/button";
 import { useContext, useEffect, useState } from "react";
 import { CONNECTION, ConnectionStatus } from "../../types/selfId";
 import { AppContext } from "../../utils/context";
-import { ethereumSignIn } from "../../utils/self-id";
+import { ethereumSignIn, UseBasicProfile } from "../../utils/self-id";
 import CustomToast from "../toasts/CustomToast";
 
 // declare let window: any;
@@ -48,7 +48,8 @@ function SelfIdButton() {
   const [hasEthereum, setHasEthereum] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [connection, connect, disconnect] = useViewerConnection();
-  const { selfid, setSelfid } = useContext(AppContext);
+  const { context, setContext } = useContext(AppContext);
+  const [basicProfile] = UseBasicProfile();
 
   useEffect(() => {
     if (window.ethereum) {
@@ -62,10 +63,16 @@ function SelfIdButton() {
     if (connection.status === CONNECTION.failed) {
       setWarningMessage("sign-in has failed.");
     }
-  }, [connection]);
+
+    if (connection.status === CONNECTION.connected) {
+      setContext(basicProfile);
+    }
+  }, [connection, setContext]);
 
   const handleConnect = async () => {
-    await ethereumSignIn(connect);
+    if (!context?.basicProfile && connection.status !== CONNECTION.connected) {
+      await ethereumSignIn(connect);
+    }
   };
 
   const handleDisconnect = () => {

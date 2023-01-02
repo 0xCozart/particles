@@ -6,7 +6,7 @@ import {
 import { WebClientSession } from "@self.id/web";
 import { useEffect, useState } from "react";
 
-async function UseBasicProfile() {
+function UseBasicProfile() {
   const record = useViewerRecord("basicProfile");
   const [basicProfile, setBasicProfile] = useState<unknown>();
   // not sure if this will properly update lmao
@@ -37,20 +37,14 @@ async function ethereumSignIn(
   try {
     if (!isSignedIn()) {
       let accounts;
-      let selfId;
       if (window.ethereum.request) {
         accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
         });
       }
-
       if (accounts) {
-        selfId = await connect(
-          new EthereumAuthProvider(window.ethereum, accounts[0])
-        );
+        await connect(new EthereumAuthProvider(window.ethereum, accounts[0]));
       }
-
-      return selfId;
     }
   } catch (e) {
     console.error(e);
