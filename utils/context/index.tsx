@@ -14,7 +14,7 @@ interface ContextType {
 
 interface UpdatableContext {
   context: ContextType | null;
-  setContext: Dispatch<SetStateAction<ContextType | null>> | null;
+  setContext: Dispatch<SetStateAction<ContextType | null>> | unknown;
 }
 
 // initial context state

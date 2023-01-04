@@ -7,7 +7,7 @@ import { WebClientSession } from "@self.id/web";
 import { useEffect, useState } from "react";
 
 function UseBasicProfile() {
-  const record = useViewerRecord("basicProfile");
+  let record = useViewerRecord("basicProfile");
   const [basicProfile, setBasicProfile] = useState<unknown>();
   // not sure if this will properly update lmao
   async function updateBasicProfile(fieldAndKey: object) {

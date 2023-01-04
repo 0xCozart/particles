@@ -1,9 +1,9 @@
-import { useViewerConnection } from "@self.id/framework";
+import { useViewerConnection, useViewerRecord } from "@self.id/framework";
 import { Button } from "primereact/button";
 import { useContext, useEffect, useState } from "react";
 import { CONNECTION, ConnectionStatus } from "../../types/selfId";
 import { AppContext } from "../../utils/context";
-import { ethereumSignIn, UseBasicProfile } from "../../utils/self-id";
+import { ethereumSignIn } from "../../utils/self-id";
 import CustomToast from "../toasts/CustomToast";
 
 // declare let window: any;
@@ -49,7 +49,10 @@ function SelfIdButton() {
   const [warningMessage, setWarningMessage] = useState("");
   const [connection, connect, disconnect] = useViewerConnection();
   const { context, setContext } = useContext(AppContext);
-  const [basicProfile] = UseBasicProfile();
+  // const record = useViewerRecord("basicProfile");
+  // const [basicProfile] = UseBasicProfile();
+  const [profile, setProfile] = useState<unknown>();
+  const basicProfile = useViewerRecord("basicProfile");
 
   useEffect(() => {
     if (window.ethereum) {
@@ -63,11 +66,12 @@ function SelfIdButton() {
     if (connection.status === CONNECTION.failed) {
       setWarningMessage("sign-in has failed.");
     }
-
     if (connection.status === CONNECTION.connected) {
-      setContext(basicProfile);
+      // connection.selfID.client.dataModel.loadTile("basic-profile");
+      setProfile(basicProfile);
+      console.log({ basicProfile });
     }
-  }, [connection, setContext]);
+  }, [connection, basicProfile]);
 
   const handleConnect = async () => {
     if (!context?.basicProfile && connection.status !== CONNECTION.connected) {
