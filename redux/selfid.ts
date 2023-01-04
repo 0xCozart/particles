@@ -14,12 +14,9 @@ const basicProfileSlice = createSlice({
     setBasicProfile(state, action) {
       state.basicProfile = { ...action.payload };
     },
-    getBasicProfile(state, action) {
-      return state.basicProfile ? state.basicProfile : null;
-    },
   },
 });
 
-export const { setBasicProfile, getBasicProfile } = basicProfileSlice.actions;
+export const { setBasicProfile } = basicProfileSlice.actions;
 
 export default basicProfileSlice.reducer;
