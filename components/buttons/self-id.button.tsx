@@ -3,7 +3,7 @@ import { Button } from "primereact/button";
 import { useContext, useEffect, useState } from "react";
 import { CONNECTION, ConnectionStatus } from "../../types/selfId";
 import { AppContext } from "../../utils/context";
-import { ethereumSignIn } from "../../utils/self-id";
+import { evmSignIn } from "../../utils/self-id";
 import CustomToast from "../toasts/CustomToast";
 
 // declare let window: any;
@@ -68,14 +68,15 @@ function SelfIdButton() {
     }
     if (connection.status === CONNECTION.connected) {
       // connection.selfID.client.dataModel.loadTile("basic-profile");
-      setProfile(basicProfile);
+      // setProfile(basicProfile);
       console.log({ basicProfile });
     }
   }, [connection, basicProfile]);
 
   const handleConnect = async () => {
     if (!context?.basicProfile && connection.status !== CONNECTION.connected) {
-      await ethereumSignIn(connect);
+      let sessionString = await evmSignIn(connect);
+      console.log({ sessionString });
     }
   };
 

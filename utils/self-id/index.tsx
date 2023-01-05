@@ -1,28 +1,18 @@
 import {
+  BasicProfile,
   EthereumAuthProvider,
   SelfID,
-  useViewerRecord,
+  ViewerRecord,
 } from "@self.id/framework";
 import { WebClientSession } from "@self.id/web";
-import { useEffect, useState } from "react";
 
-function UseBasicProfile() {
-  let record = useViewerRecord("basicProfile");
-  const [basicProfile, setBasicProfile] = useState<unknown>();
-  // not sure if this will properly update lmao
-  async function updateBasicProfile(fieldAndKey: object) {
-    if ((record.isMutable || !record.isMutating) && record.content) {
-      await record.merge({ ...record.content, ...fieldAndKey });
-    }
+async function updateBasicProfile(
+  record: ViewerRecord<BasicProfile | null>,
+  fieldAndKey: object
+) {
+  if ((record.isMutable || !record.isMutating) && record.content) {
+    await record.merge({ ...record.content, ...fieldAndKey });
   }
-  // useEffect to update context when basicProfle is updated
-  useEffect(() => {
-    if (!record.isLoading) {
-      setBasicProfile(record.content);
-    }
-  }, [record.isLoading, record.content]);
-
-  return [basicProfile, updateBasicProfile];
 }
 
 // This will change to check if did is authenticated and if session is live or expired
@@ -31,9 +21,8 @@ function isSignedIn() {
 }
 
 // doesnt need to return anything since useViewerConnection hook gives connection status
-async function ethereumSignIn(
-  connect: (provider: EthereumAuthProvider) => void
-) {
+async function evmSignIn(connect: (provider: EthereumAuthProvider) => void) {
+  let sessionString: string | null = null;
   try {
     if (!isSignedIn()) {
       let accounts;
@@ -43,30 +32,26 @@ async function ethereumSignIn(
         });
       }
       if (accounts) {
-        await connect(new EthereumAuthProvider(window.ethereum, accounts[0]));
+        const selfid: unknown = await connect(
+          new EthereumAuthProvider(window.ethereum, accounts[0])
+        );
+        sessionString = serializeSession(selfid as SelfID);
       }
     }
   } catch (e) {
     console.error(e);
   }
+  return sessionString;
 }
 
-function serializeSession(selfid: SelfID) {
+function serializeSession(selfid: SelfID): string | null {
   // will most likely need a type check here
   const session = (selfid.client as WebClientSession).session;
   if (session) {
-    session.serialize();
-    return true;
+    return session.serialize();
   } else {
-    return false;
+    return null;
   }
 }
 
-// async function ethereumSignOut(
-//   disconnect: () => void
-// ): Promise<ConnectionStatus> {
-//   await disconnect();
-//   return CONNECTION.idle;
-// }
-
-export { UseBasicProfile, isSignedIn, ethereumSignIn, serializeSession };
+export { updateBasicProfile, isSignedIn, evmSignIn };
