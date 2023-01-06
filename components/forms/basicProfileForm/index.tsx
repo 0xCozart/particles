@@ -18,8 +18,9 @@ interface InnerFormProps {
 }
 
 function InnerForm({ formData }: InnerFormProps) {
+  // jump through hoops to get entries method on object
   const formDataEntries = Object.entries(formData) as Entries<typeof formData>;
-  const FieldsAndLabels = [];
+  const FieldsAndLabels = formDataEntries.map();
   function FormDataToFields() {
     for (const [key, value] of formDataEntries.entries()) {
     }
