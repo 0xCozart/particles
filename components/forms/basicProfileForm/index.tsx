@@ -1,7 +1,32 @@
 import { BasicProfile, useViewerRecord } from "@self.id/framework";
 import { Field, Form, Formik } from "formik";
 import { useState } from "react";
-import { defaultImageMetaData } from "../../../utils/self-id/basicProfile";
+import type { Entries } from "type-fest";
+import { DefaultImageMetaData } from "../../../utils/self-id/basicProfile";
+
+function FieldAndLabel(props) {
+  return (
+    <>
+      <label htmlFor="firstName">First Name</label>
+      <Field id="firstName" name="firstName" placeholder="First Name" />
+    </>
+  );
+}
+
+interface InnerFormProps {
+  formData: object;
+}
+
+function InnerForm({ formData }: InnerFormProps) {
+  const formDataEntries = Object.entries(formData) as Entries<typeof formData>;
+  const FieldsAndLabels = [];
+  function FormDataToFields() {
+    for (const [key, value] of formDataEntries.entries()) {
+    }
+  }
+
+  return <>{formDataEntries.entries()}</>;
+}
 
 function BasicProfileForm() {
   const [forData, setFormData] = useState<BasicProfile>({});
@@ -14,10 +39,10 @@ function BasicProfileForm() {
   //   });
   const initialValues: BasicProfile = {
     name: "",
-    image: defaultImageMetaData,
+    image: DefaultImageMetaData,
     description: "",
     emoji: "",
-    background: defaultImageMetaData,
+    background: DefaultImageMetaData,
     birthDate: "",
     url: "",
   };
@@ -32,11 +57,13 @@ function BasicProfileForm() {
           actions.setSubmitting(false);
         }}
       >
-        <Form>
-          <label htmlFor="firstName">First Name</label>
-          <Field id="firstName" name="firstName" placeholder="First Name" />
-          <button type="submit">Submit</button>
-        </Form>
+        {(props) => (
+          <Form>
+            <label htmlFor="firstName">First Name</label>
+            <Field id="firstName" name="firstName" placeholder="First Name" />
+            <button type="submit">Submit</button>
+          </Form>
+        )}
       </Formik>
     </div>
   );
