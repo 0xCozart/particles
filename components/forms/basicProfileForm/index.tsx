@@ -3,30 +3,44 @@ import { Field, Form, Formik } from "formik";
 import { useState } from "react";
 import type { Entries } from "type-fest";
 import { DefaultImageMetaData } from "../../../utils/self-id/basicProfile";
-
-function FieldAndLabel(props) {
-  return (
-    <>
-      <label htmlFor="firstName">First Name</label>
-      <Field id="firstName" name="firstName" placeholder="First Name" />
-    </>
-  );
-}
+import FieldAndLabel from "../FieldAndLabel";
 
 interface InnerFormProps {
-  formData: object;
+  formData: Partial<BasicProfile>;
 }
 
-function InnerForm({ formData }: InnerFormProps) {
+// BasicProfile Human Readable for form labels
+// will refactor to be generated from json
+const BPHumanReadable: { [T in keyof Partial<BasicProfile>]: string } = {
+  name: "name",
+  image: "profile image",
+  description: "description",
+  emoji: "profile emoji",
+  background: "background image",
+  url: "url",
+};
+
+function BasicProfileInnerForm({ formData }: InnerFormProps) {
   // jump through hoops to get entries method on object
   const formDataEntries = Object.entries(formData) as Entries<typeof formData>;
-  const FieldsAndLabels = formDataEntries.map();
-  function FormDataToFields() {
-    for (const [key, value] of formDataEntries.entries()) {
-    }
-  }
 
-  return <>{formDataEntries.entries()}</>;
+  return (
+    <>
+      {formDataEntries.map((value, index) => {
+        const label = value[0].toString();
+
+        return (
+          <FieldAndLabel
+            key={index}
+            id={label}
+            placeHolder={BPHumanReadable[label]}
+            label={BPHumanReadable[label]}
+            type={"image"}
+          />
+        );
+      })}
+    </>
+  );
 }
 
 function BasicProfileForm() {
