@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import type { Entries } from "type-fest";
 import { DefaultImageMetaData } from "../../../utils/self-id/basicProfile";
 import FieldAndLabel from "../FieldAndLabel";
+import "./form.module.css";
 
 interface InnerFormProps {
   formData: Partial<BasicProfile>;
@@ -54,7 +55,7 @@ function BasicProfileForm() {
     if (record.isLoadable && record.content !== null) {
       setFormData({ ...record.content });
     }
-  }, [record]);
+  }, [record.isLoadable, record.content]);
 
   const onSubmit = () => {};
 
