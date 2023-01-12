@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ConnectionStatus } from "../types/selfid";
+import { ConnectionStatus } from "../types/selfId";
 
 const initialState: ConnectionStatus = "idle";
 

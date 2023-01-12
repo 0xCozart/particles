@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import loginStatusReducer from "./loginSlice";
-import basicProfileReducer from "./selfid";
+import basicProfileReducer from "./selfidSlice";
 
 const store = configureStore({
   reducer: {

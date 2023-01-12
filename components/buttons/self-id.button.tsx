@@ -1,8 +1,9 @@
 import { useViewerConnection, useViewerRecord } from "@self.id/framework";
 import { Button } from "primereact/button";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { setSessionSerial } from "../../redux/selfidSlice";
 import { CONNECTION, ConnectionStatus } from "../../types/selfId";
-import { AppContext } from "../../utils/context";
 import { evmSignIn } from "../../utils/self-id";
 import CustomToast from "../toasts/CustomToast";
 
@@ -48,11 +49,12 @@ function SelfIdButton() {
   const [hasEthereum, setHasEthereum] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [connection, connect, disconnect] = useViewerConnection();
-  const { context, setContext } = useContext(AppContext);
   // const record = useViewerRecord("basicProfile");
   // const [basicProfile] = UseBasicProfile();
   const [profile, setProfile] = useState<unknown>();
-  const basicProfile = useViewerRecord("basicProfile");
+  const basicProfileRecord = useViewerRecord("basicProfile");
+  const storedBasicProfile = useAppSelector((state) => state.basicProfile);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (window.ethereum) {
@@ -69,13 +71,14 @@ function SelfIdButton() {
     if (connection.status === CONNECTION.connected) {
       // connection.selfID.client.dataModel.loadTile("basic-profile");
       // setProfile(basicProfile);
-      console.log({ basicProfile });
+      console.log({ basicProfileRecord });
     }
-  }, [connection, basicProfile]);
+  }, [connection, basicProfileRecord]);
 
   const handleConnect = async () => {
-    if (!context?.basicProfile && connection.status !== CONNECTION.connected) {
+    if (!basicProfileRecord && connection.status !== CONNECTION.connected) {
       let sessionString = await evmSignIn(connect);
+      dispatch(setSessionSerial(sessionString));
       console.log({ sessionString });
     }
   };
