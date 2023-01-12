@@ -1,8 +1,8 @@
 import { useViewerConnection, useViewerRecord } from "@self.id/framework";
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { setSessionSerial } from "../../redux/selfidSlice";
+import { useAppDispatch } from "../../redux/hooks";
+import { setBasicProfile, setSessionSerial } from "../../redux/selfidSlice";
 import { CONNECTION, ConnectionStatus } from "../../types/selfId";
 import { evmSignIn } from "../../utils/self-id";
 import CustomToast from "../toasts/CustomToast";
@@ -22,12 +22,6 @@ function ConnectButton(props: ConnectButtonProps) {
       loading={connection === CONNECTION.connecting}
       onClick={async () => {
         await handleClick();
-        // if (selfId) {
-        //   const session = connection.selfID
-        //     ? connection.selfID.client.session
-        //     : null;
-        //   session.serialize();
-        // }
       }}
       label="Connect"
     />
@@ -43,20 +37,15 @@ function DisconnectButton(props: DisconnectButtonProps) {
 }
 
 // Initiates signature through ethereum provider
-// A Provider must be preset at a higher level for the `useViewConnection` hook to work.
 function SelfIdButton() {
-  // const [status, setStatus] = useState<ConnectionStatus>("idle");
   const [hasEthereum, setHasEthereum] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [connection, connect, disconnect] = useViewerConnection();
-  // const record = useViewerRecord("basicProfile");
-  // const [basicProfile] = UseBasicProfile();
-  const [profile, setProfile] = useState<unknown>();
   const basicProfileRecord = useViewerRecord("basicProfile");
-  const storedBasicProfile = useAppSelector((state) => state.basicProfile);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    // evm wallet check
     if (window.ethereum) {
       setHasEthereum(true);
     } else {
@@ -65,15 +54,17 @@ function SelfIdButton() {
         "An injected Ethereum provider such as MetaMask is needed to authenticate."
       );
     }
+
     if (connection.status === CONNECTION.failed) {
       setWarningMessage("sign-in has failed.");
     }
+
     if (connection.status === CONNECTION.connected) {
-      // connection.selfID.client.dataModel.loadTile("basic-profile");
-      // setProfile(basicProfile);
+      // set basic profile content to state
+      dispatch(setBasicProfile({ payload: basicProfileRecord.content }));
       console.log({ basicProfileRecord });
     }
-  }, [connection, basicProfileRecord]);
+  }, [connection, basicProfileRecord, dispatch]);
 
   const handleConnect = async () => {
     if (!basicProfileRecord && connection.status !== CONNECTION.connected) {

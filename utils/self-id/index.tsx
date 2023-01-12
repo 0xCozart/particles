@@ -20,6 +20,16 @@ function isSignedIn() {
   return "did" in window ? true : false;
 }
 
+function serializeSession(selfid: SelfID): string | null {
+  // will most likely need a type check here
+  const session = (selfid.client as WebClientSession).session;
+  if (session) {
+    return session.serialize();
+  } else {
+    return null;
+  }
+}
+
 // doesnt need to return anything since useViewerConnection hook gives connection status
 async function evmSignIn(connect: (provider: EthereumAuthProvider) => void) {
   let sessionString: string | null = null;
@@ -42,16 +52,6 @@ async function evmSignIn(connect: (provider: EthereumAuthProvider) => void) {
     console.error(e);
   }
   return sessionString;
-}
-
-function serializeSession(selfid: SelfID): string | null {
-  // will most likely need a type check here
-  const session = (selfid.client as WebClientSession).session;
-  if (session) {
-    return session.serialize();
-  } else {
-    return null;
-  }
 }
 
 export { updateBasicProfile, isSignedIn, evmSignIn };
