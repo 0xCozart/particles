@@ -1,45 +1,57 @@
 import { BasicProfile, useViewerRecord } from "@self.id/framework";
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
 import { Button } from "primereact/button";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import type { Entries } from "type-fest";
 import { DefaultImageMetaData } from "../../../utils/self-id/basicProfile";
+import FieldAndFileInput from "../FieldAndFileInput";
 import FieldAndLabel from "../FieldAndLabel";
 import "./form.module.css";
-
-interface InnerFormProps {
-  formData: Partial<BasicProfile>;
-}
 
 // BasicProfile Human Readable for form labels
 // will refactor to be generated from json
 const BPHumanReadable: { [T in keyof Partial<BasicProfile>]: string } = {
   name: "name",
-  image: "profile image",
   description: "description",
   emoji: "profile emoji",
-  background: "background image",
   url: "url",
+  image: "profile image",
+  background: "background image",
 };
 
-function BasicProfileInnerForm({ formData }: InnerFormProps) {
+interface InnerFormProps {
+  formData: Partial<BasicProfile>;
+  setProfileImage: Dispatch<SetStateAction<FileList | null>>;
+  setBackgroundImage: Dispatch<SetStateAction<FileList | null>>;
+}
+
+function BasicProfileInnerForm({
+  formData,
+  setProfileImage,
+  setBackgroundImage,
+}: InnerFormProps) {
   // jumping through hoops to get entries method on object
   const formDataEntries = Object.entries(formData) as Entries<typeof formData>;
 
   return (
     <>
       {formDataEntries.map((value, index) => {
-        const label = value[0].toString();
-        const inputType =
-          "image" === label || "background" === label ? "image" : "text";
+        const label: string = value[0].toString();
 
-        return (
+        return "image" === label || "background" === label ? (
+          <FieldAndFileInput
+            key={label}
+            id={label}
+            placeHolder={BPHumanReadable[label]!}
+            label={BPHumanReadable[label]!}
+            setFile={"image" === label ? setProfileImage : setBackgroundImage}
+          />
+        ) : (
           <FieldAndLabel
-            key={index}
+            key={label}
             id={label}
             placeHolder={BPHumanReadable[label]}
             label={BPHumanReadable[label]}
-            type={inputType}
           />
         );
       })}
@@ -49,6 +61,8 @@ function BasicProfileInnerForm({ formData }: InnerFormProps) {
 
 function BasicProfileForm() {
   const [formData, setFormData] = useState<BasicProfile>({});
+  const [profileImage, setProfileImage] = useState<FileList | null>(null);
+  const [backgroundImage, setBackgroundImage] = useState<FileList | null>(null);
   const record = useViewerRecord("basicProfile");
 
   useEffect(() => {
@@ -57,8 +71,14 @@ function BasicProfileForm() {
     }
   }, [record.isLoadable, record.content]);
 
-  const onSubmit = () => {};
+  const onSubmit = (
+    value: BasicProfile,
+    action: FormikHelpers<BasicProfile>
+  ) => {
+    action.setStatus("");
+  };
 
+  // not sure if this will work as intended
   const initialValues: BasicProfile = {
     name: "",
     image: DefaultImageMetaData,
@@ -67,6 +87,7 @@ function BasicProfileForm() {
     background: DefaultImageMetaData,
     birthDate: "",
     url: "",
+    ...record.content,
   };
 
   return (
@@ -81,7 +102,11 @@ function BasicProfileForm() {
       >
         {(props) => (
           <Form>
-            <BasicProfileInnerForm formData={initialValues} />
+            <BasicProfileInnerForm
+              formData={initialValues}
+              setProfileImage={setProfileImage}
+              setBackgroundImage={setBackgroundImage}
+            />
             <Button type="submit">Submit</Button>
           </Form>
         )}
