@@ -3,6 +3,8 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { Button } from "primereact/button";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import type { Entries } from "type-fest";
+import { useAppDispatch } from "../../../redux/hooks";
+import { setBasicProfile } from "../../../redux/selfidSlice";
 import { DefaultImageMetaData } from "../../../utils/self-id/basicProfile";
 import FieldAndFileInput from "../FieldAndFileInput";
 import FieldAndLabel from "../FieldAndLabel";
@@ -64,6 +66,7 @@ function BasicProfileForm() {
   const [profileImage, setProfileImage] = useState<FileList | null>(null);
   const [backgroundImage, setBackgroundImage] = useState<FileList | null>(null);
   const record = useViewerRecord("basicProfile");
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (record.isLoadable && record.content !== null) {
@@ -75,7 +78,10 @@ function BasicProfileForm() {
     value: BasicProfile,
     action: FormikHelpers<BasicProfile>
   ) => {
-    action.setStatus("");
+    action.validateForm((values: BasicProfile) => {
+      console.log({ values });
+    });
+    dispatch(setBasicProfile({ payload: formData }));
   };
 
   // not sure if this will work as intended
@@ -89,6 +95,8 @@ function BasicProfileForm() {
     url: "",
     ...record.content,
   };
+
+  const formatValues = (values): BasicProfile => {};
 
   return (
     <div>

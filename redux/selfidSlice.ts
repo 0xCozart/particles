@@ -8,7 +8,7 @@ interface ContextType {
 
 const initialState: ContextType = { basicProfile: null, sessionSerial: null };
 
-const basicProfileSlice = createSlice({
+const selfidSlice = createSlice({
   name: "selfid",
   initialState,
   reducers: {
@@ -21,6 +21,6 @@ const basicProfileSlice = createSlice({
   },
 });
 
-export const { setBasicProfile, setSessionSerial } = basicProfileSlice.actions;
+export const { setBasicProfile, setSessionSerial } = selfidSlice.actions;
 
-export default basicProfileSlice.reducer;
+export default selfidSlice.reducer;
