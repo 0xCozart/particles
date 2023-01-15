@@ -5,6 +5,7 @@ import {
 } from "@self.id/framework";
 import { Form, Formik, FormikHelpers } from "formik";
 import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import type { Entries } from "type-fest";
 import { useAppDispatch } from "../../../redux/hooks";
@@ -12,7 +13,6 @@ import { setBasicProfile } from "../../../redux/selfidSlice";
 import { uploadImage } from "../../../utils/self-id";
 import { DefaultImageMetaData } from "../../../utils/self-id/basicProfile";
 import FieldAndFileInput from "../FieldAndFileInput";
-import FieldAndLabel from "../FieldAndLabel";
 import "./form.module.css";
 
 // BasicProfile Human Readable for form labels
@@ -54,11 +54,10 @@ function BasicProfileInnerForm({
             setFile={"image" === label ? setProfileImage : setBackgroundImage}
           />
         ) : (
-          <FieldAndLabel
-            key={label}
+          <InputText
             id={label}
-            placeHolder={BPHumanReadable[label]}
-            label={BPHumanReadable[label]}
+            name={BPHumanReadable[label]!}
+            placeholder={BPHumanReadable[label]!}
           />
         );
       })}
@@ -132,7 +131,7 @@ function BasicProfileForm() {
   };
 
   return (
-    <div>
+    <div className={"form"}>
       <Formik
         initialValues={initialValues}
         onSubmit={(values, actions) => {
