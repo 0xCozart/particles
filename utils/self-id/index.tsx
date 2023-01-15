@@ -4,6 +4,7 @@ import {
   SelfID,
   ViewerRecord,
 } from "@self.id/framework";
+import { uploadImage as ipfsImageUpload } from "@self.id/image-utils";
 import { WebClientSession } from "@self.id/web";
 
 async function updateBasicProfile(
@@ -54,4 +55,11 @@ async function evmSignIn(connect: (provider: EthereumAuthProvider) => void) {
   return sessionString;
 }
 
-export { updateBasicProfile, isSignedIn, evmSignIn };
+async function uploadImage(file: File) {
+  return ipfsImageUpload("https://ipfs.infura.io:5001/api/v0", file, [
+    { width: 60, height: 60 },
+    { width: 200, height: 200 },
+  ]);
+}
+
+export { updateBasicProfile, isSignedIn, evmSignIn, uploadImage };

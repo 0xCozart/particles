@@ -1,10 +1,15 @@
-import { BasicProfile, useViewerRecord } from "@self.id/framework";
+import {
+  BasicProfile,
+  ImageSources,
+  useViewerRecord,
+} from "@self.id/framework";
 import { Form, Formik, FormikHelpers } from "formik";
 import { Button } from "primereact/button";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import type { Entries } from "type-fest";
 import { useAppDispatch } from "../../../redux/hooks";
 import { setBasicProfile } from "../../../redux/selfidSlice";
+import { uploadImage } from "../../../utils/self-id";
 import { DefaultImageMetaData } from "../../../utils/self-id/basicProfile";
 import FieldAndFileInput from "../FieldAndFileInput";
 import FieldAndLabel from "../FieldAndLabel";
@@ -62,27 +67,33 @@ function BasicProfileInnerForm({
 }
 
 function BasicProfileForm() {
-  const [formData, setFormData] = useState<BasicProfile>({});
+  // const [formData, setFormData] = useState<BasicProfile>({});
   const [profileImage, setProfileImage] = useState<FileList | null>(null);
+  const [profileImageSource, setProfileImageSource] =
+    useState<ImageSources | null>(null);
   const [backgroundImage, setBackgroundImage] = useState<FileList | null>(null);
+  const [backgroundImageSource, setBackgroundImageSource] =
+    useState<ImageSources | null>(null);
   const record = useViewerRecord("basicProfile");
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (record.isLoadable && record.content !== null) {
-      setFormData({ ...record.content });
+      // setFormData({ ...record.content });
     }
-  }, [record.isLoadable, record.content]);
 
-  const onSubmit = (
-    value: BasicProfile,
-    action: FormikHelpers<BasicProfile>
-  ) => {
-    action.validateForm((values: BasicProfile) => {
-      console.log({ values });
-    });
-    dispatch(setBasicProfile({ payload: formData }));
-  };
+    if (profileImage) {
+      (async () => {
+        setProfileImageSource(await uploadImage(profileImage[0]));
+      })();
+    }
+
+    if (backgroundImage) {
+      (async () => {
+        setBackgroundImageSource(await uploadImage(backgroundImage[0]));
+      })();
+    }
+  }, [record.isLoadable, record.content, profileImage, backgroundImage]);
 
   // not sure if this will work as intended
   const initialValues: BasicProfile = {
@@ -93,10 +104,32 @@ function BasicProfileForm() {
     background: DefaultImageMetaData,
     birthDate: "",
     url: "",
-    ...record.content,
+    // ...record.content,
   };
 
-  const formatValues = (values): BasicProfile => {};
+  const formatValues = (values: BasicProfile): BasicProfile => {
+    let output: BasicProfile = {};
+    for (const key in values) {
+      if (key === "image" && profileImageSource) {
+        output[key] = profileImageSource;
+      } else if (key === "background" && backgroundImageSource) {
+        output[key] = backgroundImageSource;
+      } else {
+        output[key] = values[key];
+      }
+    }
+    return output;
+  };
+
+  const onSubmit = (
+    values: BasicProfile,
+    action: FormikHelpers<BasicProfile>
+  ) => {
+    // action.validateForm((values: BasicProfile) => {
+    //   console.log({ values });
+    // });
+    dispatch(setBasicProfile({ payload: { ...formatValues(values) } }));
+  };
 
   return (
     <div>
