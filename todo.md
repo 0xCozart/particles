@@ -9,7 +9,13 @@ Particle is a decentralized web application to publish long form content, with p
 - The app will be the home for user content but content will be able to be shared using Particle SDK (embeds)
 - Move to reducers XD
 
-OPENAI
+#### - Components
+- editor
+- selfid basic profile sign-up editor
+- homepage w/ feed
+
+
+#### - OPENAI
 - Image generation from a small piece or entire piece of content
 - suggestions for writing variations on larger particles
 - maybe linking outside content from twitter to create coherent or collage pieces

@@ -1,9 +1,14 @@
 import Image from "next/image";
+import { Badge } from "primereact/badge";
 import { Ripple } from "primereact/ripple";
 import { StyleClass } from "primereact/styleclass";
-import { useEffect, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 
-function Home() {
+interface ShellProps {
+  children: ReactNode;
+}
+
+function Shell({ children }: ShellProps) {
   const buttonRef1 = useRef<any>();
   const buttonRef2 = useRef<any>();
   const buttonRef3 = useRef<any>();
@@ -16,7 +21,7 @@ function Home() {
     <div
       className="min-h-screen flex relative lg:static"
       style={{
-        backgroundImage: "linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%)",
+        backgroundImage: "linear-gradient(to top, #c1dfc4 0%, #deecdd 100%)",
       }}
     >
       <div
@@ -29,7 +34,7 @@ function Home() {
             className="flex align-items-center px-5 flex-shrink-0"
             style={{ height: "60px" }}
           >
-            <Image src="" alt="Image" height="30" />
+            <Image src="" alt="Image" height="30" width="30" />
           </div>
           <div className="overflow-y-auto">
             <ul className="list-none p-3 m-0">
@@ -74,7 +79,7 @@ function Home() {
                   </li>
                   <li>
                     <StyleClass
-                      nodeRef={btnRef27}
+                      nodeRef={buttonRef1}
                       selector="@next"
                       enterClassName="hidden"
                       enterActiveClassName="slidedown"
@@ -82,7 +87,7 @@ function Home() {
                       leaveActiveClassName="slideup"
                     >
                       <a
-                        ref={btnRef27}
+                        ref={buttonRef1}
                         className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
                         style={{ borderRadius: "30px" }}
                       >
@@ -95,7 +100,7 @@ function Home() {
                     <ul className="list-none py-0 pl-3 pr-0 m-0 hidden overflow-y-hidden transition-all transition-duration-400 transition-ease-in-out">
                       <li>
                         <StyleClass
-                          nodeRef={btnRef28}
+                          nodeRef={buttonRef1}
                           selector="@next"
                           enterClassName="hidden"
                           enterActiveClassName="slidedown"
@@ -103,7 +108,7 @@ function Home() {
                           leaveActiveClassName="slideup"
                         >
                           <a
-                            ref={btnRef28}
+                            ref={buttonRef1}
                             className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
                             style={{ borderRadius: "30px" }}
                           >
@@ -200,7 +205,7 @@ function Home() {
             <ul className="list-none p-3 m-0">
               <li>
                 <StyleClass
-                  nodeRef={btnRef29}
+                  nodeRef={buttonRef1}
                   selector="@next"
                   enterClassName="hidden"
                   enterActiveClassName="slidedown"
@@ -208,7 +213,7 @@ function Home() {
                   leaveActiveClassName="slideup"
                 >
                   <div
-                    ref={btnRef29}
+                    ref={buttonRef1}
                     className="p-ripple p-3 flex align-items-center justify-content-between text-gray-700 cursor-pointer"
                   >
                     <span className="font-medium">APPLICATION</span>
@@ -285,7 +290,7 @@ function Home() {
               </li>
             </ul>
             <StyleClass
-              nodeRef={btnRef30}
+              nodeRef={buttonRef1}
               selector="@prev"
               enterClassName="hidden"
               enterActiveClassName="slidedown"
@@ -293,14 +298,14 @@ function Home() {
               leaveActiveClassName="slideup"
             >
               <a
-                ref={btnRef30}
+                ref={buttonRef1}
                 className="p-ripple m-3 px-3 py-2 flex align-items-center hover:bg-purple-50 text-gray-800 cursor-pointer text-gray-800
         transition-duration-150 transition-colors"
                 style={{ borderRadius: "30px" }}
               >
                 <Image
                   alt={"test"}
-                  src="assets/images/blocks/avatars/circle/avatar-f-1.png"
+                  src=""
                   className="mr-2"
                   style={{ width: "28px", height: "28px" }}
                 />
@@ -319,7 +324,7 @@ function Home() {
         >
           <div className="flex">
             <StyleClass
-              nodeRef={btnRef31}
+              nodeRef={buttonRef1}
               selector="#app-sidebar-7"
               enterClassName="hidden"
               enterActiveClassName="fadeinleft"
@@ -328,7 +333,7 @@ function Home() {
               hideOnOutsideClick
             >
               <a
-                ref={btnRef31}
+                ref={buttonRef1}
                 className="p-ripple cursor-pointer block lg:hidden text-gray-800 mr-3"
               >
                 <i className="pi pi-bars text-4xl"></i>
@@ -337,7 +342,7 @@ function Home() {
             </StyleClass>
           </div>
           <StyleClass
-            nodeRef={btnRef32}
+            nodeRef={buttonRef1}
             selector="@next"
             enterClassName="hidden"
             enterActiveClassName="fadein"
@@ -346,7 +351,7 @@ function Home() {
             hideOnOutsideClick
           >
             <a
-              ref={btnRef32}
+              ref={buttonRef1}
               className="p-ripple cursor-pointer block lg:hidden text-gray-800"
             >
               <i className="pi pi-ellipsis-v text-2xl"></i>
@@ -371,10 +376,10 @@ function Home() {
             <li className="mr-0 lg:mr-3">
               <a
                 className="p-ripple flex p-3 lg:p-2  align-items-center text-gray-800 hover:bg-purple-50 font-medium cursor-pointer
-            transition-duration-150 transition-colors"
+            transition-duration-150 transition-colors overflow-visible"
                 style={{ borderRadius: "30px" }}
               >
-                <i className="pi pi-bell text-base lg:text-2xl mr-2 lg:mr-0 p-overlay-badge">
+                <i className="pi pi-bell text-base lg:text-2xl mr-2 lg:mr-0 p-overlay-badge overflow-visible">
                   <Badge severity="danger" />
                 </i>
                 <span className="block lg:hidden font-medium">
@@ -409,11 +414,17 @@ function Home() {
           </ul>
         </div>
         <div className="p-5 flex flex-column flex-auto">
-          <div className="border-2 border-dashed border-round flex-auto bg-white-alpha-50 border-white-alpha-40"></div>
+          {/* <div className="border-2 border-dashed border-round flex-auto bg-white-alpha-50 border-white-alpha-40"> */}
+          <div
+            className="border-2 border-line surface-border border-round surface-card flex-auto overflow-auto bg-white-alpha-50"
+            style={{ minHeight: "20rem" }}
+          >
+            {children}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Home;
+export default Shell;
