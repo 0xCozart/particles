@@ -1,203 +1,416 @@
 import Image from "next/image";
 import { Ripple } from "primereact/ripple";
 import { StyleClass } from "primereact/styleclass";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 function Home() {
-  const buttonRef1 = useRef<any>(null);
-  const buttonRef2 = useRef<any>(null);
-  const buttonRef3 = useRef<any>(null);
+  const buttonRef1 = useRef<any>();
+  const buttonRef2 = useRef<any>();
+  const buttonRef3 = useRef<any>();
+
+  useEffect(() => {
+    // buttonRef1.current?.onclick((ev: MouseEvent) => {});
+  });
 
   return (
-    <div className="min-h-screen flex flex-column">
-      <div className="bg-gray-900" style={{ height: "250px" }}>
-        <div
-          className="py-3 px-5 flex align-items-center justify-content-between relative lg:static"
-          style={{ minHeight: "80px" }}
-        >
-          <Image src="" alt="Image" height="40" className="mr-0 lg:mr-6" />
-          <StyleClass
-            nodeRef={buttonRef1}
-            selector="@next"
-            enterClassName="hidden"
-            leaveToClassName="hidden"
-            hideOnOutsideClick
+    <div
+      className="min-h-screen flex relative lg:static"
+      style={{
+        backgroundImage: "linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%)",
+      }}
+    >
+      <div
+        id="app-sidebar-7"
+        className="h-screen hidden lg:block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 select-none animation-duration-300 animation-ease-in-out bg-white-alpha-50 border-white-alpha-30"
+        style={{ width: "280px", backdropFilter: "blur(10px)" }}
+      >
+        <div className="flex flex-column h-full">
+          <div
+            className="flex align-items-center px-5 flex-shrink-0"
+            style={{ height: "60px" }}
           >
-            <a
-              ref={buttonRef1}
-              className="p-ripple cursor-pointer block lg:hidden text-gray-400"
-            >
-              <i className="pi pi-bars text-4xl"></i>
-              <Ripple />
-            </a>
-          </StyleClass>
-          <div className="align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full bg-gray-900 left-0 top-100 z-1">
-            <ul className="list-none p-0 m-0 flex lg:align-items-center select-none flex-column lg:flex-row">
-              <li>
-                <a className="p-ripple flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-gray-400 hover:text-white hover:bg-gray-800 font-medium border-round cursor-pointer transition-colors transition-duration-150">
-                  <i className="pi pi-home mr-2"></i>
-                  <span>Home</span>
-                  <Ripple />
-                </a>
-              </li>
+            <Image src="" alt="Image" height="30" />
+          </div>
+          <div className="overflow-y-auto">
+            <ul className="list-none p-3 m-0">
               <li>
                 <StyleClass
-                  nodeRef={buttonRef2}
+                  nodeRef={buttonRef1}
                   selector="@next"
                   enterClassName="hidden"
-                  enterActiveClassName="scalein"
+                  enterActiveClassName="slidedown"
                   leaveToClassName="hidden"
-                  leaveActiveClassName="fadeout"
-                  hideOnOutsideClick
+                  leaveActiveClassName="slideup"
                 >
-                  <a
-                    ref={buttonRef2}
-                    className="p-ripple flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-gray-400 hover:text-white hover:bg-gray-800 font-medium border-round cursor-pointer transition-colors transition-duration-150"
+                  <div
+                    ref={buttonRef1}
+                    className="p-ripple p-3 flex align-items-center justify-content-between text-gray-600 cursor-pointer"
                   >
-                    <i className="pi pi-users mr-2"></i>
-                    <span>Customers</span>
-                    <i className="pi pi-angle-down ml-auto lg:ml-3"></i>
+                    <span className="font-medium">FAVORITES</span>
+                    <i className="pi pi-chevron-down"></i>
                     <Ripple />
-                  </a>
+                  </div>
                 </StyleClass>
-                <ul className="list-none py-3 px-6 m-0 lg:px-0 lg:py-0 border-round shadow-0 lg:shadow-2 lg:absolute bg-gray-900 hidden origin-top w-full lg:w-15rem cursor-pointer lg:border-1 border-gray-800">
+                <ul className="list-none p-0 m-0 overflow-hidden">
                   <li>
-                    <a className="p-ripple flex p-3 align-items-center text-gray-400 hover:text-white hover:bg-gray-800 transition-colors transition-duration-150">
-                      <i className="pi pi-user-plus mr-2"></i>
-                      <span className="font-medium">Add New</span>
+                    <a
+                      className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
+                      style={{ borderRadius: "30px" }}
+                    >
+                      <i className="pi pi-home mr-2"></i>
+                      <span className="font-medium">Dashboard</span>
                       <Ripple />
                     </a>
                   </li>
-                  <li className="relative">
+                  <li>
+                    <a
+                      className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
+                      style={{ borderRadius: "30px" }}
+                    >
+                      <i className="pi pi-bookmark mr-2"></i>
+                      <span className="font-medium">Bookmarks</span>
+                      <Ripple />
+                    </a>
+                  </li>
+                  <li>
                     <StyleClass
-                      nodeRef={buttonRef3}
+                      nodeRef={btnRef27}
                       selector="@next"
                       enterClassName="hidden"
-                      enterActiveClassName="scalein"
+                      enterActiveClassName="slidedown"
                       leaveToClassName="hidden"
-                      leaveActiveClassName="fadeout"
-                      hideOnOutsideClick
+                      leaveActiveClassName="slideup"
                     >
                       <a
-                        ref={buttonRef3}
-                        className="p-ripple flex p-3 align-items-center text-gray-400 hover:text-white hover:bg-gray-800 transition-colors transition-duration-150"
+                        ref={btnRef27}
+                        className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
+                        style={{ borderRadius: "30px" }}
                       >
-                        <i className="pi pi-search mr-2"></i>
-                        <span className="font-medium">Search</span>
-                        <i className="pi pi-angle-down ml-auto lg:-rotate-90"></i>
+                        <i className="pi pi-chart-line mr-2"></i>
+                        <span className="font-medium">Reports</span>
+                        <i className="pi pi-chevron-down ml-auto"></i>
                         <Ripple />
                       </a>
                     </StyleClass>
-                    <ul className="list-none py-3 pl-3 m-0 lg:px-0 lg:py-0 border-round shadow-0 lg:shadow-2 lg:absolute bg-gray-900 hidden origin-top w-full lg:w-15rem cursor-pointer left-100 top-0 lg:border-1 border-gray-800">
+                    <ul className="list-none py-0 pl-3 pr-0 m-0 hidden overflow-y-hidden transition-all transition-duration-400 transition-ease-in-out">
                       <li>
-                        <a className="p-ripple flex p-3 align-items-center text-gray-400 hover:text-white hover:bg-gray-800 transition-colors transition-duration-150">
-                          <i className="pi pi-shopping-cart mr-2"></i>
-                          <span className="font-medium">Purchases</span>
-                          <Ripple />
-                        </a>
+                        <StyleClass
+                          nodeRef={btnRef28}
+                          selector="@next"
+                          enterClassName="hidden"
+                          enterActiveClassName="slidedown"
+                          leaveToClassName="hidden"
+                          leaveActiveClassName="slideup"
+                        >
+                          <a
+                            ref={btnRef28}
+                            className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
+                            style={{ borderRadius: "30px" }}
+                          >
+                            <i className="pi pi-chart-line mr-2"></i>
+                            <span className="font-medium">Revenue</span>
+                            <i className="pi pi-chevron-down ml-auto"></i>
+                            <Ripple />
+                          </a>
+                        </StyleClass>
+                        <ul className="list-none py-0 pl-3 pr-0 m-0 hidden overflow-y-hidden transition-all transition-duration-400 transition-ease-in-out">
+                          <li>
+                            <a
+                              className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
+                              style={{ borderRadius: "30px" }}
+                            >
+                              <i className="pi pi-table mr-2"></i>
+                              <span className="font-medium">View</span>
+                              <Ripple />
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
+                              style={{ borderRadius: "30px" }}
+                            >
+                              <i className="pi pi-search mr-2"></i>
+                              <span className="font-medium">Search</span>
+                              <Ripple />
+                            </a>
+                          </li>
+                        </ul>
                       </li>
-                      <li className="relative">
-                        <a className="p-ripple flex p-3 align-items-center text-gray-400 hover:text-white hover:bg-gray-800 transition-colors transition-duration-150">
-                          <i className="pi pi-comments mr-2"></i>
-                          <span className="font-medium">Messages</span>
+                      <li>
+                        <a
+                          className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
+                          style={{ borderRadius: "30px" }}
+                        >
+                          <i className="pi pi-chart-line mr-2"></i>
+                          <span className="font-medium">Expenses</span>
                           <Ripple />
                         </a>
                       </li>
                     </ul>
                   </li>
+                  <li>
+                    <a
+                      className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
+                      style={{ borderRadius: "30px" }}
+                    >
+                      <i className="pi pi-users mr-2"></i>
+                      <span className="font-medium">Team</span>
+                      <Ripple />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
+                      style={{ borderRadius: "30px" }}
+                    >
+                      <i className="pi pi-comments mr-2"></i>
+                      <span className="font-medium">Messages</span>
+                      <Ripple />
+                      <span
+                        className="inline-flex align-items-center justify-content-center ml-auto bg-blue-500 text-0 border-circle"
+                        style={{ minWidth: "1.5rem", height: "1.5rem" }}
+                      >
+                        3
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
+                      style={{ borderRadius: "30px" }}
+                    >
+                      <i className="pi pi-calendar mr-2"></i>
+                      <span className="font-medium">Calendar</span>
+                      <Ripple />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
+                      style={{ borderRadius: "30px" }}
+                    >
+                      <i className="pi pi-cog mr-2"></i>
+                      <span className="font-medium">Settings</span>
+                      <Ripple />
+                    </a>
+                  </li>
                 </ul>
               </li>
-              <li>
-                <a className="p-ripple flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-gray-400 hover:text-white hover:bg-gray-800 font-medium border-round cursor-pointer transition-colors transition-duration-150">
-                  <i className="pi pi-calendar mr-2"></i>
-                  <span>Calendar</span>
-                  <Ripple />
-                </a>
-              </li>
-              <li>
-                <a className="p-ripple flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-gray-400 hover:text-white hover:bg-gray-800 font-medium border-round cursor-pointer transition-colors transition-duration-150">
-                  <i className="pi pi-chart-line mr-2"></i>
-                  <span>Stats</span>
-                  <Ripple />
-                </a>
-              </li>
             </ul>
-            <ul className="list-none p-0 m-0 flex lg:align-items-center select-none flex-column lg:flex-row border-top-1 border-gray-800 lg:border-top-none">
+            <ul className="list-none p-3 m-0">
               <li>
-                <a className="p-ripple flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-gray-400 hover:text-white hover:bg-gray-800 font-medium border-round cursor-pointer transition-colors transition-duration-150">
-                  <i className="pi pi-inbox text-base lg:text-2xl mr-2 lg:mr-0"></i>
-                  <span className="block lg:hidden font-medium">Inbox</span>
-                  <Ripple />
-                </a>
-              </li>
-              <li>
-                <a className="p-ripple flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-gray-400 hover:text-white hover:bg-gray-800 font-medium border-round cursor-pointer transition-colors transition-duration-150">
-                  <i className="pi pi-bell text-base lg:text-2xl mr-2 lg:mr-0"></i>
-                  <span className="block lg:hidden font-medium">
-                    Notifications
-                  </span>
-                  <Ripple />
-                </a>
-              </li>
-              <li className="border-top-1 border-gray-800 lg:border-top-none">
-                <a className="p-ripple flex px-6 p-3 lg:px-3 lg:py-2 align-items-center hover:bg-gray-800 font-medium border-round cursor-pointer transition-colors transition-duration-150">
-                  <Image
-                    src=""
-                    className="mr-3 lg:mr-0"
-                    style={{ width: "32px", height: "32px" }}
-                    alt="test"
-                  />
-                  <div className="block lg:hidden">
-                    <div className="text-white font-medium">
-                      Josephine Lillard
-                    </div>
-                    <span className="text-gray-400 font-medium text-sm">
-                      Marketing Specialist
-                    </span>
+                <StyleClass
+                  nodeRef={btnRef29}
+                  selector="@next"
+                  enterClassName="hidden"
+                  enterActiveClassName="slidedown"
+                  leaveToClassName="hidden"
+                  leaveActiveClassName="slideup"
+                >
+                  <div
+                    ref={btnRef29}
+                    className="p-ripple p-3 flex align-items-center justify-content-between text-gray-700 cursor-pointer"
+                  >
+                    <span className="font-medium">APPLICATION</span>
+                    <i className="pi pi-chevron-down"></i>
+                    <Ripple />
                   </div>
-                  <Ripple />
-                </a>
+                </StyleClass>
+                <ul className="list-none p-0 m-0 overflow-hidden">
+                  <li>
+                    <a
+                      className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
+                      style={{ borderRadius: "30px" }}
+                    >
+                      <i className="pi pi-folder mr-2"></i>
+                      <span className="font-medium">Projects</span>
+                      <Ripple />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
+                      style={{ borderRadius: "30px" }}
+                    >
+                      <i className="pi pi-chart-bar mr-2"></i>
+                      <span className="font-medium">Performance</span>
+                      <Ripple />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="p-ripple flex align-items-center cursor-pointer p-3 text-gray-800 hover:bg-purple-50 transition-duration-150 transition-colors"
+                      style={{ borderRadius: "30px" }}
+                    >
+                      <i className="pi pi-cog mr-2"></i>
+                      <span className="font-medium">Settings</span>
+                      <Ripple />
+                    </a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </div>
+          <div className="mt-auto border-top-1 border-white-alpha-40">
+            <ul className="list-none p-2 m-0 hidden origin-bottom animation-duration-150 overflow-hidden animation-ease-in-out">
+              <li>
+                <a
+                  className="p-ripple flex align-items-center cursor-pointer p-3 hover:bg-purple-50 text-gray-800 transition-duration-150 transition-colors"
+                  style={{ borderRadius: "30px" }}
+                >
+                  <i className="pi pi-user mr-2"></i>
+                  <span className="font-medium">Profile</span>
+                  <Ripple />
+                </a>
+              </li>
+              <li>
+                <a
+                  className="p-ripple flex align-items-center cursor-pointer p-3 hover:bg-purple-50 text-gray-800 transition-duration-150 transition-colors"
+                  style={{ borderRadius: "30px" }}
+                >
+                  <i className="pi pi-cog mr-2"></i>
+                  <span className="font-medium">Settings</span>
+                  <Ripple />
+                </a>
+              </li>
+              <li>
+                <a
+                  className="p-ripple flex align-items-center cursor-pointer p-3 hover:bg-purple-50 text-gray-800 transition-duration-150 transition-colors"
+                  style={{ borderRadius: "30px" }}
+                >
+                  <i className="pi pi-sign-out mr-2"></i>
+                  <span className="font-medium">Sign Out</span>
+                  <Ripple />
+                </a>
+              </li>
+            </ul>
+            <StyleClass
+              nodeRef={btnRef30}
+              selector="@prev"
+              enterClassName="hidden"
+              enterActiveClassName="slidedown"
+              leaveToClassName="hidden"
+              leaveActiveClassName="slideup"
+            >
+              <a
+                ref={btnRef30}
+                className="p-ripple m-3 px-3 py-2 flex align-items-center hover:bg-purple-50 text-gray-800 cursor-pointer text-gray-800
+        transition-duration-150 transition-colors"
+                style={{ borderRadius: "30px" }}
+              >
+                <Image
+                  alt={"test"}
+                  src="assets/images/blocks/avatars/circle/avatar-f-1.png"
+                  className="mr-2"
+                  style={{ width: "28px", height: "28px" }}
+                />
+                <span className="font-medium">Amy Elsner</span>
+                <i className="pi pi-chevron-up ml-auto"></i>
+                <Ripple />
+              </a>
+            </StyleClass>
+          </div>
         </div>
-        <ul className="list-none py-3 px-5 m-0 flex align-items-center font-medium overflow-x-auto border-top-1 border-gray-800">
-          <li className="pr-3">
-            <a className="cursor-pointer">
-              <i className="pi pi-home text-gray-400"></i>
-            </a>
-          </li>
-          <li className="px-2">
-            <i className="pi pi-angle-right text-gray-400"></i>
-          </li>
-          <li className="px-2">
-            <a className="cursor-pointer text-gray-400 white-space-nowrap">
-              Level 3
-            </a>
-          </li>
-          <li className="px-2">
-            <i className="pi pi-angle-right text-gray-400"></i>
-          </li>
-          <li className="px-2">
-            <a className="cursor-pointer text-gray-400 white-space-nowrap">
-              Level 2
-            </a>
-          </li>
-          <li className="px-2">
-            <i className="pi pi-angle-right text-gray-400"></i>
-          </li>
-          <li className="px-2">
-            <a className="cursor-pointer text-indigo-300 white-space-nowrap">
-              Level 1
-            </a>
-          </li>
-        </ul>
       </div>
-      <div
-        className="p-5 flex flex-column flex-auto"
-        style={{ marginTop: "-8rem" }}
-      >
-        <div className="border-2 border-dashed surface-border border-round surface-section flex-auto"></div>
+      <div className="min-h-screen flex flex-column relative flex-auto">
+        <div
+          className="flex justify-content-between align-items-center px-5 border-bottom-1 relative lg:static bg-white-alpha-50 border-white-alpha-40"
+          style={{ height: "60px" }}
+        >
+          <div className="flex">
+            <StyleClass
+              nodeRef={btnRef31}
+              selector="#app-sidebar-7"
+              enterClassName="hidden"
+              enterActiveClassName="fadeinleft"
+              leaveToClassName="hidden"
+              leaveActiveClassName="fadeoutleft"
+              hideOnOutsideClick
+            >
+              <a
+                ref={btnRef31}
+                className="p-ripple cursor-pointer block lg:hidden text-gray-800 mr-3"
+              >
+                <i className="pi pi-bars text-4xl"></i>
+                <Ripple />
+              </a>
+            </StyleClass>
+          </div>
+          <StyleClass
+            nodeRef={btnRef32}
+            selector="@next"
+            enterClassName="hidden"
+            enterActiveClassName="fadein"
+            leaveToClassName="hidden"
+            leaveActiveClassName="fadeout"
+            hideOnOutsideClick
+          >
+            <a
+              ref={btnRef32}
+              className="p-ripple cursor-pointer block lg:hidden text-gray-800"
+            >
+              <i className="pi pi-ellipsis-v text-2xl"></i>
+              <Ripple />
+            </a>
+          </StyleClass>
+          <ul
+            className="list-none p-0 m-0 hidden lg:flex lg:align-items-center select-none lg:flex-row right-0 top-100 z-1 shadow-2 lg:shadow-none absolute lg:static px-3 py-3 lg:py-0 mr-3 lg:mr-0"
+            style={{ backdropFilter: "blur(10px)" }}
+          >
+            <li className="mr-0 lg:mr-3">
+              <a
+                className="p-ripple flex p-3 lg:p-2 align-items-center text-gray-800 hover:bg-purple-50 font-medium cursor-pointer
+            transition-duration-150 transition-colors"
+                style={{ borderRadius: "30px" }}
+              >
+                <i className="pi pi-inbox text-base lg:text-2xl mr-2 lg:mr-0"></i>
+                <span className="block lg:hidden font-medium">Inbox</span>
+                <Ripple />
+              </a>
+            </li>
+            <li className="mr-0 lg:mr-3">
+              <a
+                className="p-ripple flex p-3 lg:p-2  align-items-center text-gray-800 hover:bg-purple-50 font-medium cursor-pointer
+            transition-duration-150 transition-colors"
+                style={{ borderRadius: "30px" }}
+              >
+                <i className="pi pi-bell text-base lg:text-2xl mr-2 lg:mr-0 p-overlay-badge">
+                  <Badge severity="danger" />
+                </i>
+                <span className="block lg:hidden font-medium">
+                  Notifications
+                </span>
+                <Ripple />
+              </a>
+            </li>
+            <li className="border-top-1 lg:border-top-none lg:mt-0 mt-2 lg:pt-0 pt-2 border-white-alpha-40">
+              <a
+                className="p-ripple flex p-3 lg:p-2  align-items-center hover:bg-purple-50 font-medium cursor-pointer
+            transition-duration-150 transition-colors"
+                style={{ borderRadius: "30px" }}
+              >
+                <Image
+                  src=""
+                  className="mr-3 lg:mr-0"
+                  style={{ width: "32px", height: "32px" }}
+                  alt={"test"}
+                />
+                <div className="block lg:hidden">
+                  <div className="text-gray-900 font-medium">
+                    Josephine Lillard
+                  </div>
+                  <span className="text-gray-700 font-medium text-sm">
+                    Marketing Specialist
+                  </span>
+                </div>
+                <Ripple />
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div className="p-5 flex flex-column flex-auto">
+          <div className="border-2 border-dashed border-round flex-auto bg-white-alpha-50 border-white-alpha-40"></div>
+        </div>
       </div>
     </div>
   );

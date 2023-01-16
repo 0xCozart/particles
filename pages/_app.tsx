@@ -7,6 +7,7 @@ import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
 import { Provider } from "react-redux";
 import store from "../redux/store";
+import "../styles/globals.css";
 
 const merri = Merriweather_Sans({ weight: "300", subsets: ["latin"] });
 
