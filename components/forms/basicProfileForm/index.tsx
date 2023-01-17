@@ -47,7 +47,7 @@ function BasicProfileInnerForm({
 
         return "image" === label || "background" === label ? (
           <FieldAndFileInput
-            key={label}
+            key={index}
             id={label}
             placeHolder={BPHumanReadable[label]!}
             label={BPHumanReadable[label]!}
@@ -55,6 +55,7 @@ function BasicProfileInnerForm({
           />
         ) : (
           <InputText
+            key={index}
             id={label}
             name={BPHumanReadable[label]!}
             placeholder={BPHumanReadable[label]!}
