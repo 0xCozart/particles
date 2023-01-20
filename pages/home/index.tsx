@@ -3,7 +3,8 @@ import { Badge } from "primereact/badge";
 import { Ripple } from "primereact/ripple";
 import { StyleClass } from "primereact/styleclass";
 import { ReactNode, useEffect, useRef } from "react";
-import PostEditor from "../../components/editor/postEditor";
+import BasicProfileCard from "./../../components/forms/basicProfileForm/BasicProfileCard";
+// import PostEditor from "../../components/editor/postEditor";
 
 interface ShellProps {
   children: ReactNode;
@@ -420,7 +421,7 @@ function Shell({ children }: ShellProps) {
             className="border-2 border-line surface-border border-round surface-card flex-auto overflow-auto bg-white-alpha-50 align-items-center justify-content-start"
             style={{ minHeight: "20rem" }}
           >
-            {<PostEditor />}
+            {<BasicProfileCard />}
           </div>
         </div>
       </div>

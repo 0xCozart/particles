@@ -10,9 +10,10 @@ Particle is a decentralized web application to publish long form content, with p
 - Move to reducers XD
 
 #### - Components
-- editor
-- selfid basic profile sign-up editor
-- homepage w/ feed
+
+1. selfid basic profile sign-up editor ( PRIORITY )
+2. editor
+3. homepage w/ feed
 
 
 #### - OPENAI
