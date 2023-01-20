@@ -27,7 +27,7 @@ function Shell({ children }: ShellProps) {
     >
       <div
         id="app-sidebar-7"
-        className="h-screen hidden lg:block flex-shrink-0 absolute lg:static left-0 top-0 z-1 border-right-1 select-none animation-duration-300 animation-ease-in-out bg-white-alpha-50 border-white-alpha-30"
+        className="h-screen hidden lg:block flex-shrink-0 absolute lg:static left-0 top-0 z-1 select-none animation-duration-300 animation-ease-in-out bg-white-alpha-50 border-white-alpha-30"
         style={{ width: "280px", backdropFilter: "blur(10px)" }}
       >
         <div className="flex flex-column h-full">
@@ -417,7 +417,7 @@ function Shell({ children }: ShellProps) {
         <div className="p-5 flex flex-column flex-auto">
           {/* <div className="border-2 border-dashed border-round flex-auto bg-white-alpha-50 border-white-alpha-40"> */}
           <div
-            className="border-2 border-line surface-border border-round surface-card flex-auto overflow-auto bg-white-alpha-50"
+            className="border-2 border-line surface-border border-round surface-card flex-auto overflow-auto bg-white-alpha-50 align-items-center justify-content-start"
             style={{ minHeight: "20rem" }}
           >
             {<PostEditor />}

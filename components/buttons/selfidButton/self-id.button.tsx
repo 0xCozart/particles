@@ -1,11 +1,11 @@
 import { useViewerConnection, useViewerRecord } from "@self.id/framework";
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "../../redux/hooks";
-import { setBasicProfile, setSessionSerial } from "../../redux/selfidSlice";
-import { CONNECTION, ConnectionStatus } from "../../types/selfId";
-import { evmSignIn } from "../../utils/self-id";
-import CustomToast from "../toasts/CustomToast";
+import { useAppDispatch } from "../../../redux/hooks";
+import { setBasicProfile, setSessionSerial } from "../../../redux/selfidSlice";
+import { CONNECTION, ConnectionStatus } from "../../../types/selfId";
+import { evmSignIn } from "../../../utils/self-id";
+import CustomToast from "../../toasts/CustomToast";
 
 // declare let window: any;
 
