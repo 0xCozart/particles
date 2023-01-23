@@ -38,6 +38,7 @@ function BasicProfileCard() {
   const dispatch = useAppDispatch();
 
   // not sure if this will work as intended
+  // meant to populate with the current basic profile
   const initialValues: BasicProfile = {
     name: "",
     image: DefaultImageMetaData,

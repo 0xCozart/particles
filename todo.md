@@ -20,3 +20,8 @@ Particle is a decentralized web application to publish long form content, with p
 - Image generation from a small piece or entire piece of content
 - suggestions for writing variations on larger particles
 - maybe linking outside content from twitter to create coherent or collage pieces
+
+
+#### - ComposeDB
+- Ceramic/SelfId is will be deprecated 2023, it will move to a graph based database with sql redudency layer ran alongside the ceramic node
+- CeramicTiles are also being deprecated
