@@ -15,9 +15,9 @@ import { DefaultImageMetaData } from "../../../utils/self-id/basicProfile";
 import FieldAndFileInput from "../FieldAndFileInput";
 import "./form.module.css";
 
-// BasicProfile Human Readable for form labels
+// BasicProfile Readable for form labels
 // will refactor to be generated from json
-const BPHumanReadable: { [T in keyof Partial<BasicProfile>]: string } = {
+const BPReadable: { [T in keyof Partial<BasicProfile>]: string } = {
   name: "name",
   description: "description",
   emoji: "profile emoji",
@@ -49,16 +49,16 @@ function BasicProfileInnerForm({
           <FieldAndFileInput
             key={index}
             id={label}
-            placeHolder={BPHumanReadable[label]!}
-            label={BPHumanReadable[label]!}
+            placeHolder={BPReadable[label]!}
+            label={BPReadable[label]!}
             setFile={"image" === label ? setProfileImage : setBackgroundImage}
           />
         ) : (
           <InputText
             key={index}
             id={label}
-            name={BPHumanReadable[label]!}
-            placeholder={BPHumanReadable[label]!}
+            name={BPReadable[label]!}
+            placeholder={BPReadable[label]!}
           />
         );
       })}

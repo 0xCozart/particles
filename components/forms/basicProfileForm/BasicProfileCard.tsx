@@ -10,17 +10,28 @@ import { FileUpload } from "primereact/fileupload";
 import { InputSwitch } from "primereact/inputswitch";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../redux/hooks";
 import { setBasicProfile } from "../../../redux/selfidSlice";
 import { uploadImage } from "../../../utils/self-id";
 import { DefaultImageMetaData } from "../../../utils/self-id/basicProfile";
 
+// BasicProfile Readable for form labels
+// will refactor to be generated from json
+const BPReadable: { [T in keyof Partial<BasicProfile>]: string } = {
+  name: "name",
+  description: "description",
+  emoji: "profile emoji",
+  url: "url",
+  image: "profile image",
+  background: "background image",
+};
+
 function BasicProfileCard() {
-  const [profileImage, setProfileImage] = useState<FileList | null>(null);
+  const [profileImage, setProfileImage] = useState<File[] | null>(null);
   const [profileImageSource, setProfileImageSource] =
     useState<ImageSources | null>(null);
-  const [backgroundImage, setBackgroundImage] = useState<FileList | null>(null);
+  const [backgroundImage, setBackgroundImage] = useState<File[] | null>(null);
   const [backgroundImageSource, setBackgroundImageSource] =
     useState<ImageSources | null>(null);
   const record = useViewerRecord("basicProfile");
@@ -52,20 +63,42 @@ function BasicProfileCard() {
     return output;
   };
 
-  const onSubmit = (
+  const onSubmit = async (
     values: BasicProfile,
     actions: FormikHelpers<BasicProfile>
   ) => {
     // action.validateForm((values: BasicProfile) => {
     //   console.log({ values });
     // });
-    dispatch(setBasicProfile({ payload: { ...formatValues(values) } }));
+    const updatedValues = formatValues(values);
+    if (updatedValues && record.content) {
+      await record.merge({ ...updatedValues });
+      dispatch(setBasicProfile({ payload: { ...formatValues(values) } }));
+    }
   };
+
+  useEffect(() => {
+    if (record.isLoadable && record.content !== null) {
+      // setFormData({ ...record.content });
+    }
+
+    if (profileImage) {
+      (async () => {
+        setProfileImageSource(await uploadImage(profileImage[0]));
+      })();
+    }
+
+    if (backgroundImage) {
+      (async () => {
+        setBackgroundImageSource(await uploadImage(backgroundImage[0]));
+      })();
+    }
+  }, [record.isLoadable, record.content, profileImage, backgroundImage]);
 
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(values, actions) => onSubmit(values, actions)}
+      onSubmit={async (values, actions) => await onSubmit(values, actions)}
     >
       <div className="px-4 py-8 md:px-6 lg:px-8">
         <div className="text-900 font-medium text-900 text-xl mb-3">
@@ -108,8 +141,8 @@ function BasicProfileCard() {
                   url="https://primefaces.org/primereact/showcase/upload.php"
                   accept="image/*"
                   maxFileSize={1000000}
-                  onUpload={async (event) => {
-                    setProfileImageSource(await uploadImage(event.files[0]));
+                  onUpload={(event) => {
+                    setProfileImage(event.files);
                   }}
                   auto
                   chooseLabel="Browse"
